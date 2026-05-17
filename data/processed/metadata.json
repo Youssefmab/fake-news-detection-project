@@ -1,0 +1,30 @@
+{
+  "text_column": "tweet",
+  "label_column": "label",
+  "label_mapping": {
+    "fake": 0,
+    "real": 1
+  },
+  "train_size": 6420,
+  "val_size": 2140,
+  "test_size": 2140,
+  "total_size": 8560,
+  "feature_columns": [
+    "word_count",
+    "char_count",
+    "avg_word_length",
+    "unique_word_count",
+    "unique_word_ratio",
+    "exclamation_count",
+    "question_count",
+    "uppercase_ratio",
+    "punctuation_count",
+    "hashtag_count",
+    "mention_count",
+    "url_count"
+  ],
+  "class_weights": {
+    "real": 0.9553571428571429,
+    "fake": 1.0490196078431373
+  }
+}

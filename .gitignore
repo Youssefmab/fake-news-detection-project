@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Large model files (too big for GitHub — use Git LFS or store separately)
+models/*.pt
+models/*.safetensors
+models/distilbert_best/model.safetensors
+models/distilbert_best/
+models/random_forest.pkl
+
+# Large processed tensors
+data/processed/*.pt
+
+# Test / cache
+.pytest_cache/
+*.pyc
+*.pyo
+coverage.xml
+.coverage
+htmlcov/
+
+# Build artifacts
+*.docx
+*.vbs
