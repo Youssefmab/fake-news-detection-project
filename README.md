@@ -24,36 +24,53 @@ Le projet comprend :
 ```
 fake-news-detection-project/
 │
-├── README.md                          ← Ce fichier
-├── LICENSE                            ← Licence MIT
-├── requirements.txt                   ← Dépendances Python
-├── download_dataset.py                ← Script de téléchargement du dataset
+├── README.md                              ← Ce fichier
+├── LICENSE                                ← Licence MIT
+├── requirements.txt                       ← Dépendances Python
+├── download_dataset.py                    ← Script de téléchargement du dataset
+├── Presentation_Pipeline_FakeNews_COVID19.pptx  ← Présentation PowerPoint
 │
 ├── data/
-│   ├── README.md                      ← Documentation du jeu de données
-│   ├── raw/                           ← Données brutes (CSV)
-│   └── processed/                     ← Données nettoyées
+│   ├── README.md                          ← Documentation du jeu de données
+│   ├── raw/                               ← Données brutes (CSV — CONSTRAINT dataset)
+│   └── processed/                         ← Données nettoyées + métadonnées
 │
 ├── notebooks/
-│   ├── 01_data_exploration.ipynb      ← Analyse exploratoire (EDA)
-│   ├── 02_preprocessing.ipynb         ← Nettoyage et prétraitement
-│   ├── 03_feature_engineering.ipynb   ← Extraction de caractéristiques
-│   ├── 04_model_svm_baseline.ipynb    ← Modèle SVM de référence
-│   ├── 05_model_bert.ipynb            ← Fine-tuning BERT
-│   ├── 06_model_roberta.ipynb         ← Fine-tuning RoBERTa
-│   ├── 07_model_comparison.ipynb      ← Comparaison des modèles
-│   └── 08_explainability.ipynb        ← Explicabilité (LIME, SHAP)
+│   ├── 00_pipeline_complet.ipynb          ← ★ NOTEBOOK COMPLET (soumission)
+│   ├── 01_exploration.ipynb               ← Analyse exploratoire (EDA)
+│   ├── 02_preprocessing.ipynb             ← Nettoyage et prétraitement
+│   ├── 03_baseline_models.ipynb           ← SVM, LR, RF, XGBoost + TF-IDF
+│   ├── 03b_baseline_improvements.ipynb    ← Améliorations baselines
+│   ├── 04_advanced_models.ipynb           ← Fine-tuning DistilBERT / BERT
+│   ├── 05_evaluation.ipynb                ← Évaluation complète (ROC, MCC, McNemar)
+│   ├── 06_explainability.ipynb            ← Explicabilité (LIME, SHAP, Attention)
+│   └── 06b_pdp_global_explainability.ipynb ← PDP & explicabilité globale
+│
+├── src/
+│   ├── pipeline.py                        ← Pipeline sklearn end-to-end
+│   ├── data/text_processor.py             ← Prétraitement de texte
+│   ├── models/text_models.py              ← Architectures de modèles
+│   ├── evaluation/metrics.py              ← Métriques d'évaluation
+│   └── explainability/interpretability.py ← LIME, SHAP, Attention
 │
 ├── app/
-│   ├── streamlit_app.py               ← Application Streamlit interactive
-│   └── api.py                         ← API REST Flask
+│   ├── streamlit_app.py                   ← Application Streamlit interactive
+│   └── api.py                             ← API REST Flask
 │
-├── models/                            ← Modèles sauvegardés (non versionnés)
+├── models/                                ← Modèles sauvegardés
+│   ├── *.pkl                              ← Modèles baseline (SVM, LR, RF, XGBoost)
+│   ├── tfidf_vectorizer.pkl               ← Vectoriseur TF-IDF
+│   ├── distilbert_best/                   ← DistilBERT fine-tuné (config + tokenizer)
+│   └── *.csv                              ← Résultats d'évaluation
+│
+├── reports/
+│   ├── figures/                           ← ~50 figures de résultats
+│   └── final_results.csv                  ← Tableau récapitulatif
 │
 └── tests/
-    ├── __init__.py
-    ├── test_text_processor.py         ← Tests unitaires — prétraitement
-    └── test_metrics.py                ← Tests unitaires — évaluation
+    ├── test_text_processor.py             ← Tests unitaires — prétraitement
+    ├── test_pipeline.py                   ← Tests unitaires — pipeline
+    └── test_metrics.py                    ← Tests unitaires — évaluation
 ```
 
 ## Installation
@@ -113,16 +130,17 @@ fake-news-detection-project/
 
 Les notebooks sont conçus pour être exécutés **dans l'ordre** :
 
-| #  | Notebook                        | Description                          |
-| -- | ------------------------------- | ------------------------------------ |
-| 01 | `data_exploration.ipynb`        | Analyse exploratoire du dataset      |
-| 02 | `preprocessing.ipynb`           | Nettoyage des textes                 |
-| 03 | `feature_engineering.ipynb`     | Extraction de features linguistiques |
-| 04 | `model_svm_baseline.ipynb`      | Entraînement du SVM de référence     |
-| 05 | `model_bert.ipynb`              | Fine-tuning de BERT                  |
-| 06 | `model_roberta.ipynb`           | Fine-tuning de RoBERTa               |
-| 07 | `model_comparison.ipynb`        | Comparaison et analyse des résultats |
-| 08 | `explainability.ipynb`          | Explicabilité des prédictions        |
+| #   | Notebook                          | Description                               |
+| --- | --------------------------------- | ----------------------------------------- |
+| 00  | `00_pipeline_complet.ipynb`       | ★ Pipeline complet — notebook de soumission |
+| 01  | `01_exploration.ipynb`            | Analyse exploratoire du dataset (EDA)     |
+| 02  | `02_preprocessing.ipynb`          | Nettoyage, features linguistiques, BERT   |
+| 03  | `03_baseline_models.ipynb`        | SVM, LR, Random Forest, XGBoost + TF-IDF |
+| 03b | `03b_baseline_improvements.ipynb` | Améliorations et grid search              |
+| 04  | `04_advanced_models.ipynb`        | Fine-tuning DistilBERT / BERT             |
+| 05  | `05_evaluation.ipynb`             | Évaluation complète (ROC, MCC, McNemar)   |
+| 06  | `06_explainability.ipynb`         | Explicabilité (LIME, SHAP, Attention)     |
+| 06b | `06b_pdp_global_explainability.ipynb` | PDP et explicabilité globale          |
 
 Pour lancer Jupyter :
 
