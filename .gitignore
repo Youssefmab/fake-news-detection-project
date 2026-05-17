@@ -49,5 +49,5 @@ coverage.xml
 htmlcov/
 
 # Build artifacts
-*.docx
+# *.docx  ← kept for article submission
 *.vbs
